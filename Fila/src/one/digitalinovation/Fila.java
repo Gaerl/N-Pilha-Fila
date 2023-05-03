@@ -1,8 +1,8 @@
 package one.digitalinovation;
 
-public class Fila {
+public class Fila<T> {
 
-    private No refNoEntradaFila;
+    private No<T> refNoEntradaFila;
     //Referência de entrada pra fila, entrando pelo final dela
 
     public Fila() {
@@ -13,7 +13,8 @@ public class Fila {
 
 
     //Métodos enqueue, dequeue e isEmpty
-    public void enqueue(No novoNo) {
+    public void enqueue(T object){
+        No novoNo = new No(object);
         novoNo.setRefNo(refNoEntradaFila);
         refNoEntradaFila = novoNo;
 
@@ -22,7 +23,7 @@ public class Fila {
 
     }
 
-    public No first() {
+    public T first() {
         if (!this.isEmpty()) {
             No primeiroNo = refNoEntradaFila;
             while (true) {
@@ -33,12 +34,12 @@ public class Fila {
                     break;
                 }
             }
-            return primeiroNo;
+            return (T) primeiroNo.getObject();
         }
         return null;
     }
 
-    public No dequeue() {
+    public T dequeue() {
         if (!this.isEmpty()) {
             No primeiroNo = refNoEntradaFila;
             No noAuxiliar = refNoEntradaFila;
@@ -52,7 +53,7 @@ public class Fila {
                     break;
                 }
             }
-            return primeiroNo;
+            return (T) primeiroNo.getObject();
         }
         return null;
     }
