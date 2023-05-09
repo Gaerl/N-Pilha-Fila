@@ -35,18 +35,38 @@ public class ListaEncadeada<T> {
 
     }
 
+    //IMPLEMENTANDO O METODO getNo para ele devolver um conteudo e nao um no
+    public T get(int index){
+        return getNo(index).getConteudo();
+
+    }
+
     private No<T> getNo (int index){
         validaIndice(index);
         No<T> noAuxiliar = referenciaEntrada;
         No<T> noRetorno = null;
 
-        for (int i = 0; i < this.size()-1; i++){
+        for (int i = 0; i <= index; i++){
             noRetorno = noAuxiliar;
             noAuxiliar = noAuxiliar.getProximoNo();
 
         }
         return noRetorno;
 
+    }
+
+    //MÉTODO REMOVE - Retornar o conteudo do no que foi removido
+    public T remove(int index){
+        No<T> noPivor = this.getNo(index);
+        if(index == 0){ //REMOVENDO O PRIMEIRO NO, NO DE INDICE 0
+            referenciaEntrada = noPivor.getProximoNo();//Sempre irá referenciar o segundo no caso nao tenha nenhum no na lista
+            return noPivor.getConteudo();
+        }
+
+        //Caso ele passe pelo if de cima, cairá aqui onde ele referenciará o no anterior ao do index entrado, removera e vai referenciar o proximo no do que foi removido
+        No<T> noAnterior = getNo(index - 1);
+        noAnterior.setProximoNo(noPivor.getProximoNo());
+        return noPivor.getConteudo();
     }
 
 
@@ -91,4 +111,16 @@ public class ListaEncadeada<T> {
 
     }
 
+    //METODO toString para ver toda a lista printada e nao so apenas a referenciaEntrada
+    @Override
+    public String toString() {
+        String strRetorno = "";
+        No<T> noAuxiliar = referenciaEntrada;
+        for(int i = 0; i < this.size(); i++){
+            strRetorno += "[No{conteudo" + noAuxiliar.getConteudo() + "}]--->";
+            noAuxiliar = noAuxiliar.getProximoNo();
+        }
+        strRetorno += "null";
+        return strRetorno;
+    }
 }
